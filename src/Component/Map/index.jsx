@@ -12,16 +12,38 @@ import Map, {
 
 const MapScreen = (props) => {
   const {
-    handleMapClick = () => {}, markerCoord, baseMap, handleRouteClick = () => {}, routeCoord, trackingMode, route
+    handleMapClick = () => {}, markerCoord, baseMap, handleRouteClick = () => {}, routeCoord, trackingMode, route, savedPoint, savedTrack
   } = props;
 
   const handleClickMap = !trackingMode ? handleMapClick : handleRouteClick;
+  // const arrayedCoordinateTrack = savedTrack ? Object.values(savedTrack?.data[0]?.track || {}) : null
+  // const coordinates = arrayedCoordinateTrack && [ arrayedCoordinateTrack ]
+
 
   const dataOne = {
     type: "Feature",
     properties: {},
     geometry: route[0]?.geometry
   };
+
+  // const dataTwo = {
+  //   type: "Feature",
+  //   properties: {},
+  //   geometry: { coordinates: arrayedCoordinateTrack, type: "LineString" }
+  // };
+
+  const geoJsonTrack = savedTrack && savedTrack?.data?.map((el) => {
+    const arrayedCoordinateTrack = savedTrack ? Object.values(el?.track || {}) : null
+    return {
+      "type": "Feature",
+      "properties": {},
+      "geometry": { coordinates: arrayedCoordinateTrack, type: "LineString" }
+    }
+
+  })
+
+  console.log(geoJsonTrack)
+
 
   return (
     <MapProvider>
@@ -51,6 +73,11 @@ const MapScreen = (props) => {
             <Marker latitude={el?.lat} longitude={el.lng} offsetLeft={-20} offsetTop={-10} color="red"/>
           )
         })}
+        {savedPoint && savedPoint?.data ? savedPoint?.data?.map((el) => {
+          return (
+            <Marker latitude={el?.latitude || 0} longitude={el?.longitude || 0} offsetLeft={-20} offsetTop={-10} color="yellow"/>
+          )
+        }): null}
         {route && (
           <Source id="polylineLayer" type="geojson" data={dataOne}>
             <Layer
@@ -68,6 +95,42 @@ const MapScreen = (props) => {
             />
           </Source>
         )}
+        {/* {savedTrack && (
+          <Source id="polylineLayer" type="geojson" data={dataTwo}>
+            <Layer
+              id="lineLayer"
+              type="line"
+              source="my-data"
+              layout={{
+                "line-join": "round",
+                "line-cap": "round"
+              }}
+              paint={{
+                "line-color": "rgba(0, 230, 0, 1)",
+                "line-width": 2
+              }}
+            />
+          </Source>
+        )} */}
+        {geoJsonTrack && geoJsonTrack.map((el) => {
+          return (
+            <Source id="polylineLayer" type="geojson" data={el}>
+              <Layer
+                id="lineLayer"
+                type="line"
+                source="my-data"
+                layout={{
+                  "line-join": "round",
+                  "line-cap": "round"
+                }}
+                paint={{
+                  "line-color": "rgba(0, 230, 0, 1)",
+                  "line-width": 2
+                }}
+              />
+            </Source>
+          )
+        })}
       </Map>
     </MapProvider>
   );

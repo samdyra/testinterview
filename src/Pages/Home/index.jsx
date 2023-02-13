@@ -91,6 +91,7 @@ export default function HomeScreen() {
   };
 
   const handleSaveRoute = (value) => {
+    console.log(value)
     if (!value) {
       return toast("Create a Track First!", { type: "warning" });
     }
@@ -114,6 +115,8 @@ export default function HomeScreen() {
         />
       );
     }
+
+    // TO DO: REFACTOR LATER
     return (
       <div className={s.wrapper}>
         <div
@@ -174,6 +177,8 @@ export default function HomeScreen() {
         routeCoord={routeCoord}
         trackingMode={trackingMode}
         route={shownRoute}
+        savedPoint={resPoint}
+        savedTrack={res}
       />
       <PressComponent
         handleTrackingMode={handleTrackingMode}

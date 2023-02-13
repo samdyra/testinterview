@@ -22,20 +22,14 @@ const ModalTrack = ({
 
   const [ progressCompress, setProgressCompress ] = useState(0);
   const [ progress, setProgress ] = useState(0);
-
-  let result = {};
-
-  coord[0]?.geometry?.coordinates.forEach((element, index) => {
-    result[index] = element;
-  });
-
+  const [ coordArray, setCoordArray ] = useState([]);
 
   const [ formData, setFormData ] = useState({
     nama: "",
     namaTempat: "",
     desc: "",
     image: "",
-    track: result
+    track: coordArray
   });
 
   const dbRef = collection(db, "track");
@@ -44,6 +38,15 @@ const ModalTrack = ({
     setImages("");
   }, [ open ])
 
+  useEffect(() => {
+    setCoordArray(flattenArray(coord[0]?.geometry?.coordinates))
+
+  }, [ coord ])
+
+  useEffect(() => {
+    setFormData({ ...formData, track: coordArray })
+  }, [ coordArray ])
+
   function handleQuestionChange(event) {
     setFormData({
       ...formData,
@@ -51,6 +54,13 @@ const ModalTrack = ({
     });
   }
 
+  function flattenArray(nestedArray) {
+    let result = {}
+    nestedArray?.forEach((element, index) => {
+      result[index] = element;
+    });
+    return result;
+  }
 
   const handlePublish = () => {
     const storageRef = ref(storage, `/track/${formData.image.name}`);
