@@ -96,7 +96,7 @@ export default function HomeScreen() {
     setDataModalTrack(value);
     setIsModalTrackShown(true);
   }
-  console.log(res)
+
   // ---------- UI VARIABLES ----------
   const Panel = () => {
     if (panelModeControl === "control") {

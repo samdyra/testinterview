@@ -24,7 +24,7 @@ const UseDeleteDataWithImage = ({
   };
   return (
     <div className="deleteButton">
-      <button onClick={handleDelete}>{`delete ${type}`}</button>
+      <button onClick={handleDelete}>{`delete`}</button>
     </div>
   );
 }

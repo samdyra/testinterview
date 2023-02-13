@@ -23,7 +23,7 @@ const ModalTrack = ({
   const [ progressCompress, setProgressCompress ] = useState(0);
   const [ progress, setProgress ] = useState(0);
 
-  const result = {};
+  let result = {};
 
   coord[0]?.geometry?.coordinates.forEach((element, index) => {
     result[index] = element;
@@ -69,15 +69,6 @@ const ModalTrack = ({
         console.log(err);
       },
       () => {
-        setFormData({
-          judul: "",
-          image: "",
-          date: "",
-          redaksi: ""
-        });
-
-        setImages("")
-
         getDownloadURL(uploadImage.snapshot.ref).then((url) => {
           addDoc(dbRef, {
             image: url,

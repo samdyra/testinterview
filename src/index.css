@@ -80,11 +80,11 @@ button:focus-visible {
 }
 
 .deleteButton button {
-  border: 2px solid red;
+  border: 2px solid rgb(0, 0, 0);
   padding: 5px;
   border-radius: 10px;
   background-color: rgba(0, 0, 128, 0);
-  color: red;
+  color: black;
 }
 
 .deleteButton button:hover {

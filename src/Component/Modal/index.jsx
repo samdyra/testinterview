@@ -63,14 +63,6 @@ const Modal = ({
         console.log(err);
       },
       () => {
-        setFormData({
-          judul: "",
-          image: "",
-          date: "",
-          redaksi: ""
-        });
-
-        setImages("")
 
         getDownloadURL(uploadImage.snapshot.ref).then((url) => {
           addDoc(dbRef, {
