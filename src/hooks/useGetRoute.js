@@ -23,7 +23,7 @@ const useGetRoute = (profile="mapbox/driving", coordinate) => {
 
   React.useEffect(() => {
     if (isHitApi) {
-      getRoute()
+      // getRoute()
     }
   }, [ isHitApi ])
 
