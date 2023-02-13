@@ -7,10 +7,14 @@ import {
   Modal,
   MapScreen,
   BaseMapPicker,
+  ModalTrack,
+  Tweet
 } from "../../Component";
 import { MAPBOX_API_KEY_STREET } from "../../constants";
 import useGetRoute from "../../hooks/useGetRoute";
 import s from "./Home.module.scss";
+import { toast } from "react-toastify";
+import useLoadTrack from "../../hooks/useLoadTrack";
 
 export default function HomeScreen() {
   // ---------- HOOKS ----------
@@ -19,14 +23,17 @@ export default function HomeScreen() {
   const [ routeCoord, setRouteCoord ] = useState([]);
   const [ profileRoute, setProfileRoute ] = useState("mapbox/driving");
   const { route } = useGetRoute(profileRoute, routeCoord);
+  const [ dataModalTrack, setDataModalTrack ] = useState([]);
   const [ shownRoute, setShownRoute ] = useState(route);
   const [ coord ] = useGetCurrentLocation();
   const [ baseMap, setBaseMap ] = useState({
     url: "mapbox://styles/mapbox/streets-v11",
     apiKey: MAPBOX_API_KEY_STREET,
   });
-
+  const res = useLoadTrack()
   const [ isModalShown, setIsModalShown ] = useState(false);
+  const [ isModalTrackShown, setIsModalTrackShown ] = useState(false);
+
   const [ markerCoord, setMarkerCoord ] = useState({
     lng: 0,
     lat: 0,
@@ -82,6 +89,14 @@ export default function HomeScreen() {
     setProfileRoute(data);
   };
 
+  const handleSaveRoute = (value) => {
+    if (!value) {
+      return toast("Create a Track First!", { type: "warning" });
+    }
+    setDataModalTrack(value);
+    setIsModalTrackShown(true);
+  }
+  console.log(res)
   // ---------- UI VARIABLES ----------
   const Panel = () => {
     if (panelModeControl === "control") {
@@ -94,6 +109,7 @@ export default function HomeScreen() {
           panelModeControl={panelModeControl}
           handleProfileRoute={handleProfileRoute}
           profileRoute={profileRoute}
+          handleSaveRoute={handleSaveRoute}
         />
       );
     }
@@ -116,6 +132,11 @@ export default function HomeScreen() {
             &nbsp; Saved Data
           </div>
         </div>
+        {res && res?.data?.map((item) => {
+          return (
+            <Tweet item={item}/>
+          )
+        })}
       </div>
     );
   }
@@ -127,6 +148,11 @@ export default function HomeScreen() {
         open={isModalShown}
         coord={coordClick}
         onClose={() => setIsModalShown(false)}
+      />
+      <ModalTrack 
+        open={isModalTrackShown}
+        coord={dataModalTrack}
+        onClose={() => setIsModalTrackShown(false)}
       />
       <Sidebar>
         <Panel />

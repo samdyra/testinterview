@@ -11,7 +11,7 @@ import { storage, db } from "../../Config/firebase/index";
 import { toast } from "react-toastify";
 import moment from "moment";
 
-const Modal = ({
+const ModalTrack = ({
   open, onClose, coord 
 }) => {
   const [ , setImages ] = useState([]);
@@ -23,16 +23,22 @@ const Modal = ({
   const [ progressCompress, setProgressCompress ] = useState(0);
   const [ progress, setProgress ] = useState(0);
 
+  const result = {};
+
+  coord[0]?.geometry?.coordinates.forEach((element, index) => {
+    result[index] = element;
+  });
+
+
   const [ formData, setFormData ] = useState({
     nama: "",
     namaTempat: "",
-    latitude: coord.lat,
-    longitude: coord.lng,
     desc: "",
     image: "",
+    track: result
   });
 
-  const dbRef = collection(db, "dataSintesa");
+  const dbRef = collection(db, "track");
 
   useEffect(() => {
     setImages("");
@@ -47,7 +53,7 @@ const Modal = ({
 
 
   const handlePublish = () => {
-    const storageRef = ref(storage, `/kegiatan/${formData.image.name}`);
+    const storageRef = ref(storage, `/track/${formData.image.name}`);
 
     const uploadImage = uploadBytesResumable(storageRef, formData.image);
 
@@ -79,11 +85,10 @@ const Modal = ({
             nama: formData.nama,
             namaTempat: formData.namaTempat,
             desc: formData.desc,
-            latitude: coord.lat,
-            longitude: coord.lng,
+            track: formData.track
           })
             .then(() => {
-              toast("Titik Berhasil ditambahkan", { type: "success" });
+              toast("Track Berhasil ditambahkan", { type: "success" });
               setProgress(0);
             })
             .catch(() => {
@@ -109,26 +114,27 @@ const Modal = ({
           className={s.modalContainer}
         >
           <form>
-            <h1>Latitude : {coord.lat} </h1>
-            <h1 style={{ marginBottom: 20 }} >Longitude : {coord.lng}</h1>
             <input
               type="text"
               name="nama"
               onChange={(e) => handleQuestionChange(e)}
               placeholder="Nama"
+              style={{ marginBottom: 10 }}
             />
             <input
               type="text"
               name="namaTempat"
               onChange={(e) => handleQuestionChange(e)}
-              placeholder="Nama Tempat"
+              placeholder="Nama Track"
+              style={{ marginBottom: 10 }}
+
             />
             <input
               type="text"
               name="desc"
               onChange={(e) => handleQuestionChange(e)}
-              placeholder="Deskripsi"
-              style={{ marginBottom: 10 }}
+              placeholder="Deskripsi Track"
+              style={{ marginBottom: 50 }}
             />
 
             <h1 style={{ marginBottom: 20 }}>Photo</h1>
@@ -140,14 +146,6 @@ const Modal = ({
                 onChange={(e) => handleImageChange(e)}
                 id="imageupload"
               />
-
-              {/* <div className={s.image_preview}>
-                <img
-                  key={index}
-                  src={URL.createObjectURL(formData.image)}
-                  alt="random image"
-                />
-              </div> */}
             </div>
 
             {progress === 0 || progress === 100 ? null : (
@@ -184,4 +182,4 @@ const Modal = ({
   );
 };
 
-export default memo(Modal);
+export default memo(ModalTrack);

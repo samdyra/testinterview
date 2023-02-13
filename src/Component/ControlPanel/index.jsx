@@ -5,7 +5,7 @@ import { MAPBOX_ROUTING_PROFILES } from "../../constants"
 const ControlPanel = ({
   routeCoord, clearMap, 
   route, handlePanelClick, panelModeControl,
-  handleProfileRoute, profileRoute
+  handleProfileRoute, profileRoute, handleSaveRoute
 }) => {
   const [ shownRoute, setShownRoute ] = React.useState(routeCoord)
   const [ shownDuration, setShowDuration ] = React.useState(0)
@@ -49,14 +49,13 @@ const ControlPanel = ({
       {shownRoute.length !== 2 && <div className={s.coord}>X: 0 | Y: 0</div>}
       {shownRoute.length !== 1 && <div className={s.coord}>X: {shownRoute[1]?.lng} | Y: {shownRoute[1]?.lat}</div>}
       <div className={s.saveClear}>
-        <div className={s.saveCoord}>Save Coordinate</div>
+        <div className={s.saveCoord} onClick={() => handleSaveRoute(route)}>Save Coordinate</div>
         <div>|</div>
         <div onClick={clearMap} className={s.saveCoord}>Clear Coordinate</div>
       </div>
       <div className={s.routingProfile}>Routing Profile</div>
       <div className={s.routingContent}> 
         {MAPBOX_ROUTING_PROFILES.map((profile, index) => {
-          console.log(profileRoute)
           const isMatch = profile.value === profileRoute
           return (
             <div className={s.routingContainer}>
