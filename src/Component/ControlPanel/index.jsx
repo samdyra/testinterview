@@ -4,19 +4,19 @@ import { MAPBOX_ROUTING_PROFILES } from "../../constants"
 
 const ControlPanel = ({
   routeCoord, clearMap, 
-  route 
+  route, handlePanelClick, panelModeControl
 }) => {
   
   const [ shownRoute, setShownRoute ] = React.useState(routeCoord)
-  const [shownDuration, setShowDuration] = React.useState(0)
-  const [shownDistance, setShowDistance] = React.useState(0)
-  const [shownRouteShown, setShowRouteShown] = React.useState([])
-
+  const [ shownDuration, setShowDuration ] = React.useState(0)
+  const [ shownDistance, setShowDistance ] = React.useState(0)
+  const [ shownRouteShown, setShowRouteShown ] = React.useState([])
+  const isControl = panelModeControl === "control"
+  const isSave = panelModeControl === "save"
   const routeShown = route && route[0]?.legs[0]?.steps
   const distance = route && route[0]?.distance
   const duration = route && route[0]?.duration
   const minutes = Math.floor(duration / 60);
-  console.log(route)
 
   const showData = () => {
     setShownRoute(routeCoord)
@@ -37,10 +37,12 @@ const ControlPanel = ({
     }
   }, [ routeCoord, distance, duration, minutes, routeShown ])
 
-
   return (
     <div className={s.wrapper}>
-      <div className={s.title}>Control Panel</div>
+      <div style={{ display: "flex", alignItems: "center" }} className={s.nav}>
+        <div className={isControl ? s.control : s.title} onClick={() => handlePanelClick("control")}>Control Panel &nbsp;| </div>
+        <div className={isSave ? s.control : s.title} onClick={() => handlePanelClick("save")}>&nbsp; Saved Data</div>
+      </div>
       <div className={s.coorSrc}>Source Coordinate</div>
       <div className={s.coord}>X: {shownRoute[0]?.lng} | Y: {shownRoute[0]?.lat}</div>
       <div className={s.coorSrc}>Destiny Coordinate</div>
@@ -63,21 +65,25 @@ const ControlPanel = ({
       </div>
       <div className={s.estDuration}>
         <div>Estimaded Distance</div>
-        <div className={s.value}>{shownDistance || 0} meter</div>
+        <div className={s.value}>{shownDistance && shownRoute.length !== 1 ? shownDistance : 0} meter</div>
       </div>
       <div className={s.estDuration}>
         <div>Estimated Duration</div>
-        <div className={s.value}>{shownDuration} minutes</div>
+        <div className={s.value}>{shownDuration && shownRoute.length !== 1 ? shownDuration : 0} minutes</div>
       </div>
-      {shownRouteShown.length !== 0 && <div className={s.steps}>Steps</div>}
-      {shownRouteShown && shownRouteShown.map((step, index) => {
-        return (
-          <div className={s.stepsContainer}>
-            <div key={index}>- {step?.maneuver?.instruction}</div>
-            <div className={s.value} key={index}>in around {step?.distance} m </div>
-          </div>
-        )
-      })}
+      {shownRouteShown.length !== 0 && shownRoute.length !== 1 && (
+        <div className={s.stepsContentContainer}>
+          <div className={s.steps}>Steps</div>
+          {shownRouteShown && shownRouteShown.map((step, index) => {
+            return (
+              <div className={s.stepsContainer}>
+                <div key={index}>- {step?.maneuver?.instruction}</div>
+                <div className={s.value} key={index}>in around {step?.distance} m </div>
+              </div>
+            )
+          })}
+        </div>
+      )}
     </div>
   )
 }

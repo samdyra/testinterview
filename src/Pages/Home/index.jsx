@@ -5,12 +5,14 @@ import {
 } from "../../Component";
 import { MAPBOX_API_KEY_STREET } from "../../constants";
 import useGetRoute from "../../hooks/useGetRoute";
+import s from "./Home.module.scss";
 
 
 export default function HomeScreen() {
 
   // ---------- HOOKS ----------
   const [ trackingMode, setTrackingMode ] = useState(true)
+  const [ panelModeControl, setPanelModeControl ] = useState("control")
   const [ routeCoord, setRouteCoord ] = useState([ ])
   const { route } = useGetRoute( "mapbox/driving", routeCoord)
   const [ shownRoute, setShownRoute ] = useState(route)
@@ -30,6 +32,9 @@ export default function HomeScreen() {
     lng: coord.longitude,
     lat: coord.latitude,
   });
+
+  const isControl = panelModeControl === "control"
+  const isSave = panelModeControl === "save"
 
   // ---------- EFFECTS ----------
   React.useEffect(() => {
@@ -51,6 +56,10 @@ export default function HomeScreen() {
     setShownRoute([])
   }
 
+  const handlePanelClick = (value) => {
+    setPanelModeControl(value)
+  }
+
   const handleRouteClick = (e) => {
     if (routeCoord.length === 0) {
       return setRouteCoord([ e.lngLat ])
@@ -65,6 +74,29 @@ export default function HomeScreen() {
     setTrackingMode(!trackingMode)
   }
 
+  // ---------- UI VARIABLES ----------
+  const Panel = () => {
+    if (panelModeControl === "control") {
+      return (
+        <ControlPanel routeCoord={routeCoord} 
+          clearMap={clearMap} 
+          route={route} 
+          handlePanelClick={handlePanelClick}
+          panelModeControl={panelModeControl}
+        />
+      )
+    }
+    return (
+      <div className={s.wrapper}>
+        <div style={{ display: "flex", alignItems: "center" }} className={s.nav}>
+          <div className={isControl ? s.control : s.title} onClick={() => handlePanelClick("control")}>Control Panel &nbsp;| </div>
+          <div className={isSave ? s.control : s.title} onClick={() => handlePanelClick("save")}>&nbsp; Saved Data</div>
+        </div>
+      </div>
+    )
+  }
+
+
   // ---------- RENDER FUNCTION ----------
   return (
     <>
@@ -74,7 +106,7 @@ export default function HomeScreen() {
         onClose={() => setIsModalShown(false)}
       />
       <Sidebar>
-        <ControlPanel routeCoord={routeCoord} clearMap={clearMap} route={route}/>
+        <Panel />
       </Sidebar>
       <MapScreen
         coord={coord}
