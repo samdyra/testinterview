@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import useGetCurrentLocation from "../../hooks/useGetCurrentLocation";
 import {
   Sidebar,
@@ -83,7 +83,7 @@ export default function HomeScreen() {
   };
 
   // ---------- UI VARIABLES ----------
-  const Panel = useMemo(() => {
+  const Panel = () => {
     if (panelModeControl === "control") {
       return (
         <ControlPanel
@@ -118,7 +118,7 @@ export default function HomeScreen() {
         </div>
       </div>
     );
-  }, [ panelModeControl ]);
+  }
 
   // ---------- RENDER FUNCTION ----------
   return (

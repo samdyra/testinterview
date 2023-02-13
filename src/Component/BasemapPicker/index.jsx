@@ -1,4 +1,4 @@
-import React, { Memo } from 'react'
+import React, { memo } from 'react'
 import s from "./styles.module.scss"
 import layer from "../../assets/layer.png"
 import { MAPBOX_STYLE } from '../../constants'
@@ -44,4 +44,4 @@ const BaseMapPicker = ({ setBaseMap }) => {
   )
 }
 
-export default Memo(BaseMapPicker)
+export default memo(BaseMapPicker)
