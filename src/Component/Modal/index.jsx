@@ -81,7 +81,7 @@ const Modal = ({
             longitude: coord.lng,
           })
             .then(() => {
-              toast("keigatan lahir", { type: "success" });
+              toast("Titik Berhasil ditambahkan", { type: "success" });
               setProgress(0);
             })
             .catch(() => {
