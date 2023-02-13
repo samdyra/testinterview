@@ -8,6 +8,7 @@ import Map, {
   AttributionControl,
   Source,
   Layer,
+  Popup
 } from "react-map-gl";
 
 const MapScreen = (props) => {
@@ -16,8 +17,8 @@ const MapScreen = (props) => {
   } = props;
 
   const handleClickMap = !trackingMode ? handleMapClick : handleRouteClick;
-  // const arrayedCoordinateTrack = savedTrack ? Object.values(savedTrack?.data[0]?.track || {}) : null
-  // const coordinates = arrayedCoordinateTrack && [ arrayedCoordinateTrack ]
+  const [ popupInfo, setPopupInfo ] = React.useState(null);
+
 
 
   const dataOne = {
@@ -25,12 +26,6 @@ const MapScreen = (props) => {
     properties: {},
     geometry: route[0]?.geometry
   };
-
-  // const dataTwo = {
-  //   type: "Feature",
-  //   properties: {},
-  //   geometry: { coordinates: arrayedCoordinateTrack, type: "LineString" }
-  // };
 
   const geoJsonTrack = savedTrack && savedTrack?.data?.map((el) => {
     const arrayedCoordinateTrack = savedTrack ? Object.values(el?.track || {}) : null
@@ -42,7 +37,6 @@ const MapScreen = (props) => {
 
   })
 
-  console.log(geoJsonTrack)
 
 
   return (
@@ -75,7 +69,10 @@ const MapScreen = (props) => {
         })}
         {savedPoint && savedPoint?.data ? savedPoint?.data?.map((el) => {
           return (
-            <Marker latitude={el?.latitude || 0} longitude={el?.longitude || 0} offsetLeft={-20} offsetTop={-10} color="yellow"/>
+            <Marker latitude={el?.latitude || 0} longitude={el?.longitude || 0} offsetLeft={-20} offsetTop={-10} color="yellow" onClick={(e) => {
+              e.originalEvent.stopPropagation();
+              setPopupInfo(el);
+            }} />
           )
         }): null}
         {route && (
@@ -112,7 +109,7 @@ const MapScreen = (props) => {
             />
           </Source>
         )} */}
-        {geoJsonTrack && geoJsonTrack.map((el) => {
+        {/* {geoJsonTrack && geoJsonTrack.map((el) => {
           return (
             <Source id="polylineLayer" type="geojson" data={el}>
               <Layer
@@ -130,7 +127,21 @@ const MapScreen = (props) => {
               />
             </Source>
           )
-        })}
+        })} */}
+        {popupInfo && (
+          <Popup
+            anchor="top"
+            longitude={Number(popupInfo.longitude)}
+            latitude={Number(popupInfo.latitude)}
+            onClose={() => setPopupInfo(null)}
+          >
+            <a>
+              {popupInfo?.nama}   &nbsp;
+              {popupInfo?.namaTempat} 
+            </a>
+            <img width="100%" height="50%" src={popupInfo.image} />
+          </Popup>
+        )}
       </Map>
     </MapProvider>
   );
