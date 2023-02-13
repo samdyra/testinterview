@@ -6,13 +6,13 @@ import { getAuth } from "firebase/auth";
 // dotenv.config();
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyBoFlOt8CHRBVM8gNyHldr3ynMIBd1Yxhc",
-  authDomain: "datasintesa-2bc4e.firebaseapp.com",
-  projectId: "datasintesa-2bc4e",
-  storageBucket: "datasintesa-2bc4e.appspot.com",
-  messagingSenderId: "154869314103",
-  appId: "1:154869314103:web:232f15f9bbb79bbac885b2",
-  measurementId: "G-RM7PSCC71E",
+  apiKey: "AIzaSyC43U76NDegnMEQ9joYceabfoQSjGvSdSQ",
+  authDomain: "interviewproject-5c712.firebaseapp.com",
+  projectId: "interviewproject-5c712",
+  storageBucket: "interviewproject-5c712.appspot.com",
+  messagingSenderId: "971308937279",
+  appId: "1:971308937279:web:5920d64c8cf60e2567888a",
+  measurementId: "G-7C2BZR91LW"
 };
 
 const app = initializeApp(firebaseConfig);
