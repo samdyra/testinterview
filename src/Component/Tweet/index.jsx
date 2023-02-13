@@ -2,7 +2,7 @@ import React from "react";
 import UseDeleteDataWithImage from "../../hooks/UseDeleteData";
 import s from "./styles.module.scss"
 
-const Tweet = ({ item }) => {
+const Tweet = ({ item, type }) => {
 
   return (
     <div className={s.container}>
@@ -13,7 +13,7 @@ const Tweet = ({ item }) => {
         {/* <p>{data.temp}</p> */}
         <div>{item?.desc}</div>
       </div>
-      <UseDeleteDataWithImage id={item?.id} image={item?.image} type={"track"}/>
+      <UseDeleteDataWithImage id={item?.id} image={item?.image} type={type}/>
     </div>
   );
 };

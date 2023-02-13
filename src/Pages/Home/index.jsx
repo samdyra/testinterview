@@ -31,6 +31,7 @@ export default function HomeScreen() {
     apiKey: MAPBOX_API_KEY_STREET,
   });
   const res = useLoadTrack()
+  const resPoint = useLoadTrack("dataSintesa")
   const [ isModalShown, setIsModalShown ] = useState(false);
   const [ isModalTrackShown, setIsModalTrackShown ] = useState(false);
 
@@ -132,9 +133,16 @@ export default function HomeScreen() {
             &nbsp; Saved Data
           </div>
         </div>
+        <div>Saved Track Data</div>
         {res && res?.data?.map((item) => {
           return (
-            <Tweet item={item}/>
+            <Tweet item={item} type={"track"}/>
+          )
+        })}
+        <div>Saved Point Data</div>
+        {resPoint && resPoint?.data?.map((item) => {
+          return (
+            <Tweet item={item} type="dataSintesa"/>
           )
         })}
       </div>

@@ -8,16 +8,15 @@ const UseDeleteDataWithImage = ({
   id, image, type
 }) => {
   const handleDelete = async () => {
-    if (window.confirm(`Are you sure you want to delete this ${type}?`)) {
+    if (window.confirm(`Are you sure you want to delete this data?`)) {
       try {
         await deleteDoc(doc(db, type, id))
-        toast(`${type} deleted successfully`, { type: "success" })
+        toast(`deleted successfully`, { type: "success" })
         const storageRef = ref(storage, image);
-        console.log("storageRef", storageRef)
         await deleteObject(storageRef);
       }
       catch (error) {
-        toast(`Error deleting ${type}`, { type: "error" });
+        toast(`Error deleting`, { type: "error" });
         console.log("erroe", error)
       }
     }
