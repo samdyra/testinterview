@@ -14,7 +14,8 @@ export default function HomeScreen() {
   const [ trackingMode, setTrackingMode ] = useState(true)
   const [ panelModeControl, setPanelModeControl ] = useState("control")
   const [ routeCoord, setRouteCoord ] = useState([ ])
-  const { route } = useGetRoute( "mapbox/driving", routeCoord)
+  const [ profileRoute, setProfileRoute ] = useState("mapbox/driving")
+  const { route } = useGetRoute( profileRoute, routeCoord)
   const [ shownRoute, setShownRoute ] = useState(route)
   const [ coord ] = useGetCurrentLocation();
   const [ baseMap, setBaseMap ] = useState({
@@ -74,6 +75,10 @@ export default function HomeScreen() {
     setTrackingMode(!trackingMode)
   }
 
+  const handleProfileRoute = (data) => {
+    setProfileRoute(data)
+  }
+
   // ---------- UI VARIABLES ----------
   const Panel = () => {
     if (panelModeControl === "control") {
@@ -83,6 +88,8 @@ export default function HomeScreen() {
           route={route} 
           handlePanelClick={handlePanelClick}
           panelModeControl={panelModeControl}
+          handleProfileRoute={handleProfileRoute}
+          profileRoute={profileRoute}
         />
       )
     }

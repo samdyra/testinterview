@@ -18,8 +18,8 @@ export const MAPBOX_ROUTING_PROFILES = [
     value: "mapbox/walking"
   },
   {
-    name: "Cycling",
-    value: "mapbox/cycling"
+    name: "Traffic",
+    value: "mapbox/driving-traffic"
   }
 ] 
 

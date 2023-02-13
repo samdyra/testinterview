@@ -1,6 +1,8 @@
 import React from 'react'
 import axios from 'axios'
 import { MAPBOX_DIRECTION_API, MAPBOX_MASTER_API } from '../constants'
+import { toast } from "react-toastify";
+
 
 
 const useGetRoute = (profile="mapbox/driving", coordinate) => {
@@ -23,9 +25,9 @@ const useGetRoute = (profile="mapbox/driving", coordinate) => {
 
   React.useEffect(() => {
     if (isHitApi) {
-      // getRoute()
+      getRoute()
     }
-  }, [ isHitApi ])
+  }, [ isHitApi, profile ])
 
   const getRoute = () => {
     axios.get(ENDPOINT)
@@ -36,6 +38,7 @@ const useGetRoute = (profile="mapbox/driving", coordinate) => {
       .catch(err => {
         setError(err)
         setLoading(false)
+        toast("Something Went Wrong!", { type: "error" });
       })
   }
   
