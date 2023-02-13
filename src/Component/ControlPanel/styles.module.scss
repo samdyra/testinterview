@@ -5,4 +5,80 @@
 .title {
     font-size: 20px;
     font-weight: 500;
+    margin-bottom: 10px;
+}
+
+
+.coorSrc {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.coord {
+    font-size: 12px;
+    font-weight: 400;
+    margin-bottom: 15px;
+    border-bottom: 1px solid black;
+
+}
+
+.saveClear {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    font-size: 14px;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 10px;
+    justify-content: space-around;
+    padding-inline: 20px;
+    background-color: rgba(179, 179, 179, 0.274);
+    padding-block: 2px;
+    margin-bottom: 20px;
+    
+}
+
+.saveClear:hover {
+    cursor: pointer;
+}
+
+.saveCoord:hover {
+    font-weight: bold;
+}
+
+.routingContent {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+    font-size: 14px;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 10px;
+    justify-content: space-around;
+    padding-inline: 20px;
+    background-color: rgba(179, 179, 179, 0.274);
+    padding-block: 2px;
+    margin-bottom: 20px;
+}
+
+.routingContent:hover {
+    cursor: pointer;
+}
+
+.routingContainer:hover {
+    font-weight: bold;
+}
+
+.estDuration {
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+
+.value {
+    font-weight: bold;
+}
+
+.steps {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 5px;
 }

@@ -5,7 +5,6 @@ import Map, {
   FullscreenControl,
   GeolocateControl,
   Marker,
-  ScaleControl,
   AttributionControl,
   Source,
   Layer,
@@ -47,7 +46,6 @@ const MapScreen = (props) => {
         <FullscreenControl />
         <Marker latitude={markerCoord.lat} longitude={markerCoord.lng}/>
         <GeolocateControl />
-        <ScaleControl />
         {routeCoord && routeCoord.map((el) => {
           return (
             <Marker latitude={el?.lat} longitude={el.lng} offsetLeft={-20} offsetTop={-10} color="red"/>

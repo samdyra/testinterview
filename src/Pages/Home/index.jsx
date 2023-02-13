@@ -74,7 +74,7 @@ export default function HomeScreen() {
         onClose={() => setIsModalShown(false)}
       />
       <Sidebar>
-        <ControlPanel routeCoord={routeCoord}/>
+        <ControlPanel routeCoord={routeCoord} clearMap={clearMap} route={route}/>
       </Sidebar>
       <MapScreen
         coord={coord}
