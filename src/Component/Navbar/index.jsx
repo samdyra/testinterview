@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import s from "./Navbar.module.scss";
 import logo from "../../assets/datasintensa.jpeg";
 
@@ -12,4 +12,4 @@ const NavBar = () => (
   </div>
 )
 
-export default NavBar;
+export default memo(NavBar);

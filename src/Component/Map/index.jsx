@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import Map, {
   MapProvider,
   NavigationControl,
@@ -73,4 +73,4 @@ const MapScreen = (props) => {
   );
 };
 
-export default MapScreen;
+export default memo(MapScreen);

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import s from "./styles.module.scss"
 import { MAPBOX_ROUTING_PROFILES } from "../../constants"
 
@@ -90,4 +90,4 @@ const ControlPanel = ({
   )
 }
 
-export default ControlPanel
+export default memo(ControlPanel)

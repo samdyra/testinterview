@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, {
+  useEffect, useState, memo 
+} from "react";
 import s from "./style.module.scss";
 import UseCompressImage from "../../hooks/useCompressImage";
 import { collection, addDoc } from "firebase/firestore";
@@ -184,4 +186,4 @@ const Modal = ({
   );
 };
 
-export default Modal;
+export default memo(Modal);

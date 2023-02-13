@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import s from "./sidebar.module.scss";
 
 const SideBar = ({ children }) => (
@@ -7,4 +7,4 @@ const SideBar = ({ children }) => (
   </div>
 );
 
-export default SideBar;
+export default memo(SideBar);

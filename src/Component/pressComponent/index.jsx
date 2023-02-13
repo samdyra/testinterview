@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import s from './style.module.scss'
 import click from "../../assets/click.png"
 
@@ -13,4 +13,4 @@ const PressComponent = ({ handleTrackingMode, trackingMode }) => {
   )
 }
 
-export default PressComponent
+export default memo(PressComponent)
