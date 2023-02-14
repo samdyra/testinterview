@@ -14,3 +14,8 @@
         object-fit: cover;
     }
 }
+
+.container:hover {
+    cursor: pointer;
+    background-color: rgb(216, 216, 216);
+}

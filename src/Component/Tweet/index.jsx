@@ -3,7 +3,7 @@ import UseDeleteDataWithImage from "../../hooks/UseDeleteData";
 import s from "./styles.module.scss"
 
 const Tweet = ({
-  item, type, onClickTrack 
+  item, type, onClickTrack = () => {}
 }) => {
 
   return (

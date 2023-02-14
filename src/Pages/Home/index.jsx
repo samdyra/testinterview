@@ -142,12 +142,14 @@ export default function HomeScreen() {
           </div>
         </div>
         <div>Saved Track Data</div>
+        <div style={{fontSize: 13}}>(Click Image to see the Route that were saved)</div>
         {res && res?.data?.map((item) => {
           return (
             <Tweet item={item} type={"track"} onClickTrack={onClickTrack}/>
           )
         })}
         <div>Saved Point Data</div>
+        <div style={{fontSize: 13}}>(All Points are automatically shown, without clicking. Click the points on the map to see details)</div>
         {resPoint && resPoint?.data?.map((item) => {
           return (
             <Tweet item={item} type="dataSintesa" />
