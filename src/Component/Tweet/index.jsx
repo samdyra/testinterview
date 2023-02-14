@@ -2,10 +2,12 @@ import React from "react";
 import UseDeleteDataWithImage from "../../hooks/UseDeleteData";
 import s from "./styles.module.scss"
 
-const Tweet = ({ item, type }) => {
+const Tweet = ({
+  item, type, onClickTrack 
+}) => {
 
   return (
-    <div className={s.container}>
+    <div className={s.container} onClick={() => onClickTrack(item)}>
       <img src={item?.image}></img>
       <div className={s.content}>
         <div>{item?.nama}</div>

@@ -91,12 +91,17 @@ export default function HomeScreen() {
   };
 
   const handleSaveRoute = (value) => {
-    console.log(value)
     if (!value) {
       return toast("Create a Track First!", { type: "warning" });
     }
     setDataModalTrack(value);
     setIsModalTrackShown(true);
+  }
+
+  const [ routeSaved, setRouteSaved ] = useState([]);
+
+  const onClickTrack = (data) => {
+    setRouteSaved(data)
   }
 
   // ---------- UI VARIABLES ----------
@@ -139,13 +144,13 @@ export default function HomeScreen() {
         <div>Saved Track Data</div>
         {res && res?.data?.map((item) => {
           return (
-            <Tweet item={item} type={"track"}/>
+            <Tweet item={item} type={"track"} onClickTrack={onClickTrack}/>
           )
         })}
         <div>Saved Point Data</div>
         {resPoint && resPoint?.data?.map((item) => {
           return (
-            <Tweet item={item} type="dataSintesa"/>
+            <Tweet item={item} type="dataSintesa" />
           )
         })}
       </div>
@@ -178,7 +183,8 @@ export default function HomeScreen() {
         trackingMode={trackingMode}
         route={shownRoute}
         savedPoint={resPoint}
-        savedTrack={res}
+        // savedTrack={res}
+        routeSaved={routeSaved}
       />
       <PressComponent
         handleTrackingMode={handleTrackingMode}

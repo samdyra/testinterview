@@ -13,13 +13,12 @@ import Map, {
 
 const MapScreen = (props) => {
   const {
-    handleMapClick = () => {}, markerCoord, baseMap, handleRouteClick = () => {}, routeCoord, trackingMode, route, savedPoint, savedTrack
+    handleMapClick = () => {}, markerCoord, baseMap, handleRouteClick = () => {}, routeCoord, trackingMode, route, savedPoint, routeSaved
   } = props;
 
   const handleClickMap = !trackingMode ? handleMapClick : handleRouteClick;
   const [ popupInfo, setPopupInfo ] = React.useState(null);
-
-
+  const arrayedCoordinateTrack = routeSaved ? Object.values(routeSaved?.track || {}) : null
 
   const dataOne = {
     type: "Feature",
@@ -27,17 +26,22 @@ const MapScreen = (props) => {
     geometry: route[0]?.geometry
   };
 
-  const geoJsonTrack = savedTrack && savedTrack?.data?.map((el) => {
-    const arrayedCoordinateTrack = savedTrack ? Object.values(el?.track || {}) : null
-    return {
-      "type": "Feature",
-      "properties": {},
-      "geometry": { coordinates: arrayedCoordinateTrack, type: "LineString" }
-    }
+  const dataTwo = {
+    type: "Feature",
+    properties: {},
+    geometry: { coordinates: arrayedCoordinateTrack, type: "LineString" }
+  }
 
-  })
+  console.log(dataTwo)
 
-
+  // const geoJsonTrack = savedTrack && savedTrack?.data?.map((el) => {
+  //   const arrayedCoordinateTrack = savedTrack ? Object.values(el?.track || {}) : null
+  //   return {
+  //     "type": "Feature",
+  //     "properties": {},
+  //     "geometry": { coordinates: arrayedCoordinateTrack, type: "LineString" }
+  //   }
+  // })
 
   return (
     <MapProvider>
@@ -92,7 +96,7 @@ const MapScreen = (props) => {
             />
           </Source>
         )}
-        {/* {savedTrack && (
+        {routeSaved && (
           <Source id="polylineLayer" type="geojson" data={dataTwo}>
             <Layer
               id="lineLayer"
@@ -108,7 +112,7 @@ const MapScreen = (props) => {
               }}
             />
           </Source>
-        )} */}
+        )}
         {/* {geoJsonTrack && geoJsonTrack.map((el) => {
           return (
             <Source id="polylineLayer" type="geojson" data={el}>
