@@ -7,3 +7,6 @@ export { default as MapScreen } from "./Map"
 export { default as Modal } from "./Modal"
 export { default as ModalTrack } from "./ModalTrack"
 export { default as Tweet } from "./Tweet"
+export { default as ModalTutorial } from "./ModalTutorial"
+export { default as Help } from "./Help"
+

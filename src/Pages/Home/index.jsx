@@ -8,7 +8,9 @@ import {
   MapScreen,
   BaseMapPicker,
   ModalTrack,
-  Tweet
+  Tweet,
+  ModalTutorial,
+  Help
 } from "../../Component";
 import { MAPBOX_API_KEY_STREET } from "../../constants";
 import useGetRoute from "../../hooks/useGetRoute";
@@ -21,6 +23,7 @@ export default function HomeScreen() {
   const [ trackingMode, setTrackingMode ] = useState(true);
   const [ panelModeControl, setPanelModeControl ] = useState("control");
   const [ routeCoord, setRouteCoord ] = useState([]);
+  const [ routeSaved, setRouteSaved ] = useState([]);
   const [ profileRoute, setProfileRoute ] = useState("mapbox/driving");
   const { route } = useGetRoute(profileRoute, routeCoord);
   const [ dataModalTrack, setDataModalTrack ] = useState([]);
@@ -34,6 +37,7 @@ export default function HomeScreen() {
   const resPoint = useLoadTrack("dataSintesa")
   const [ isModalShown, setIsModalShown ] = useState(false);
   const [ isModalTrackShown, setIsModalTrackShown ] = useState(false);
+  const [ isModalTutorialShown, setIsModalTutorialShown ] = useState(false);
 
   const [ markerCoord, setMarkerCoord ] = useState({
     lng: 0,
@@ -52,6 +56,10 @@ export default function HomeScreen() {
   React.useEffect(() => {
     setShownRoute(route);
   }, [ route ]);
+
+  React.useEffect(() => {
+    setIsModalTutorialShown(true)
+  }, [ ]);
 
   // ---------- INTIAL FUNCTION ----------
   const handleMapClick = (e) => {
@@ -98,10 +106,12 @@ export default function HomeScreen() {
     setIsModalTrackShown(true);
   }
 
-  const [ routeSaved, setRouteSaved ] = useState([]);
-
   const onClickTrack = (data) => {
     setRouteSaved(data)
+  }
+
+  const showModalTutorial = () => {
+    setIsModalTutorialShown(true)
   }
 
   // ---------- UI VARIABLES ----------
@@ -172,6 +182,10 @@ export default function HomeScreen() {
         coord={dataModalTrack}
         onClose={() => setIsModalTrackShown(false)}
       />
+      <ModalTutorial 
+        open={isModalTutorialShown}
+        onClose={() => setIsModalTutorialShown(false)}
+      />
       <Sidebar>
         <Panel />
       </Sidebar>
@@ -192,6 +206,7 @@ export default function HomeScreen() {
         handleTrackingMode={handleTrackingMode}
         trackingMode={trackingMode}
       />
+      <Help showModalTutorial={showModalTutorial}/>
       <BaseMapPicker setBaseMap={setBaseMap} />
     </>
   );
