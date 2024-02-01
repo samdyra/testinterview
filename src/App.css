@@ -13,3 +13,10 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
+*::-webkit-scrollbar {
+  width: 0px;
+}
+
+/* zarr files */
+/* titiler */
+/* oauth2 */
